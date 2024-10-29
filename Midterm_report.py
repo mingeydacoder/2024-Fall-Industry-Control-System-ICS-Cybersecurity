@@ -1,5 +1,9 @@
 import requests
 import json
+import numpy as np
+
+bad_ip = np.genfromtxt("FY113_Blacklist_ref.txt",dtype='str')
+#print(bad_ip[0])
 
 #Analysis ip address
 
@@ -16,6 +20,12 @@ def ip_analysis(ip):
 
     return(ip_addr,city,domain,threat)
 
+count = 0
+for i in bad_ip:
+    print(ip_analysis(bad_ip[count]))
+    count += 1
+
+#Analysis URL
 
 def get_analysis_id(url):
     url = "https://www.virustotal.com/api/v3/urls"
@@ -46,6 +56,3 @@ def get_analysis_report(id):
     response2 = requests.get(url, headers=headers)
 
     return(response2.text)
-
-
-print(ip_analysis("144.178.56.0"))
